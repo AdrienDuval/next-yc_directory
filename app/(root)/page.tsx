@@ -1,5 +1,7 @@
 import SearchForm from "@/components/SearchForm";
 import StarupCard from "@/components/StarupCard";
+import { client } from "@/sanity/lib/client";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({
   searchParams,
@@ -17,19 +19,24 @@ export default async function Home({
     title: string;
   }
   const query = (await searchParams).query;
-  const posts = [
-    {
-      _createAt: new Date(),
-      views: 55,
-      author: { _id: 1, name: "Adrien" },
-      _id: 1,
-      description: "This is a description",
-      image:
-        "https://i.pinimg.com/736x/26/99/ae/2699ae26a1ce8a2e724e0e6ad7a9cbf1.jpg",
-      category: "Robots",
-      title: "We Robots",
-    },
-  ];
+
+  const posts = await client.fetch(STARTUPS_QUERY);
+
+  console.log(JSON.stringify(posts, null, 2));
+
+  // const posts = [
+  //   {
+  //     _createAt: new Date(),
+  //     views: 55,
+  //     author: { _id: 1, name: "Adrien" },
+  //     _id: 1,
+  //     description: "This is a description",
+  //     image:
+  //       "https://i.pinimg.com/736x/26/99/ae/2699ae26a1ce8a2e724e0e6ad7a9cbf1.jpg",
+  //     category: "Robots",
+  //     title: "We Robots",
+  //   },
+  // ];
   return (
     <>
       <section className="pink_container">

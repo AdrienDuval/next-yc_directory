@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 
 const StarupCard = ({ post }: { StartupCardType }) => {
   const {
-    _createAt,
+    _createdAt,
     views,
     author: { _id: authorId, name },
     category,
@@ -18,13 +18,14 @@ const StarupCard = ({ post }: { StartupCardType }) => {
   } = post;
   return (
     <li className="startup-card group">
-      <div className="startup_card_date">
-        <p>{formatDate(_createAt)}</p>
+      <div className="startup_card_date flex justify-between">
+        <p>{formatDate(_createdAt)}</p>
+        <div className="flex gap-1.5">
+          <EyeIcon className="size-6 text-primary" />
+          <span className="text-16-medium">{views}</span>
+        </div>
       </div>
-      <div className="flex gap-1.5">
-        <EyeIcon className="size-6 text-primary" />
-        <span className="text-16-medium">{views}</span>
-      </div>
+
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/user/${authorId}`}>
@@ -46,7 +47,13 @@ const StarupCard = ({ post }: { StartupCardType }) => {
       </div>
       <Link href={`/startup/${_id}`} className="">
         <p className="startup-card_desc">{description}</p>
-        <img src={image} alt="placeholder" className="Startup-card_img" />
+        <Image
+          src={image}
+          alt="placeholder"
+          className="Startup-card_img w-full"
+          width={400}
+          height={200}
+        />
       </Link>
 
       <div className="flex-between gap-3 mt-5">
