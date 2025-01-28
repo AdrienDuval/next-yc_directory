@@ -4,18 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
+import { Author, Startup } from "@/sanity/types";
 
-const StarupCard = ({ post }: { StartupCardType }) => {
+export type StartupCardTypeCard = Omit<Startup, "author"> & {author?: Author};
+
+const StarupCard = ({ post }: { post: StartupCardTypeCard }) => {
   const {
     _createdAt,
     views,
-    author: { _id: authorId, name },
+    author,
     category,
     title,
     _id,
     image,
     description,
   } = post;
+  console.log(post.ima);
   return (
     <li className="startup-card group">
       <div className="startup_card_date flex justify-between">
@@ -28,14 +32,14 @@ const StarupCard = ({ post }: { StartupCardType }) => {
 
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
-          <Link href={`/user/${authorId}`}>
-            <p className="text-16-medium line-clamp-1">{name}</p>
+          <Link href={`/user/${author?.id}`}>
+            <p className="text-16-medium line-clamp-1">{author?.name}</p>
           </Link>
           <Link href={`/startup/${_id}`}>
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
-        <Link href={`/startup/${authorId}`}>
+        <Link href={`/startup/${author?.id}`}>
           <Image
             src="https://placehold.co/48x48"
             alt="placeholder"
@@ -57,7 +61,7 @@ const StarupCard = ({ post }: { StartupCardType }) => {
       </Link>
 
       <div className="flex-between gap-3 mt-5">
-        <Link href={`/?query=${category.toLowerCase()}`}>
+        <Link href={`/?query=${category?.toLowerCase()}`}>
           <p className="text-16-medium">{category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
